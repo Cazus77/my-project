@@ -1,13 +1,10 @@
 import "./App.sass";
 import Calendar from "../src/components/Calendar/Calendar";
-import PrevMonthButton from "./components/PrevMounthButton/PrevMounthButton";
-import NextMonthButton from "./components/NextMounthButton/NextMounthButton";
 import DateDifference from "./components/DateDifference/DateDifference";
-import { useState } from "react";
+import React, { useState } from "react";
 import * as calendar from "./components/Calendar";
 
 const defaultData = {
-  years: [2017, 2018, 2019, 2020, 2021, 2022],
   monthNames: [
     "Январь",
     "Февраль",
@@ -26,63 +23,89 @@ const defaultData = {
 };
 const objState = {
   date: new Date(),
-  year: new Date().getFullYear(),
-  month: new Date().getMonth(),
-  day: new Date().getDate(),
   currentDate: new Date(),
   selectedDate: null,
 };
 
 function App() {
   const [state, setState] = useState(objState);
-  const [selectMonth, setSelectMonth] = useState(state.month);
-  const [selectYear, setSelectYear] = useState(state.year);
 
+  const { monthNames, weekDayNames } = defaultData;
   const { currentDate, selectedDate } = state;
-  const { years, monthNames, weekDayNames } = defaultData;
-  const monthData = calendar.getMonthData(selectYear, selectMonth);
-  /////////////////////////////////////////////////////////////////////////////////
+
+  const year = state.date.getFullYear();
+  const month = state.date.getMonth();
+  console.log(currentDate);
+  console.log(selectedDate);
+
+  ////////////////////////////////////////////////////////////////////////////
+  const handlePrevMonthButtonClick = () => {
+    const date = new Date(year, month - 1);
+    setState({ date });
+  };
+
+  const handleNextMonthButtonClick = () => {
+    const date = new Date(year, month + 1);
+    setState({ date });
+  };
+
   const handleDayClick = (date) => {
     setState({ ...state, ...{ selectedDate: date } });
   };
-  const handlePrevMonthButtonClick = () => {
-    const date = new Date(state.year, state.month - 1);
-    console.log(date);
-    setState({ date });
+
+  const monthText = (month) => {
+    if (month === 12) {
+      return monthNames[0];
+    } else if (month === -1) {
+      return monthNames[11];
+    }
+    return monthNames[month];
   };
-  /////////////////////////////////////////////////////////////////////////////////////
+
+  const yearText = (year, month) => {
+    if (month === 12) {
+      return year + 1;
+    } else if (month === -1) {
+      return year - 1;
+    }
+    return year;
+  };
+
+  //////////////////////////////////////////////////////////////////////////
+
   return (
     <div className="block">
       <h1 className="description">Разность дат по календарю</h1>
       <div className="block__calendar">
-        <PrevMonthButton
-          handlePrevMonthButtonClick={handlePrevMonthButtonClick}
+        <button onClick={handlePrevMonthButtonClick}>{"<"}</button>
+        <Calendar
+          year={yearText(year, month - 1)}
+          monthText={monthText(month - 1)}
+          weekDayNames={weekDayNames}
+          currentDate={currentDate}
+          selectedDate={selectedDate}
+          handleDayClick={handleDayClick}
+          monthData={calendar.getMonthData(year, month - 1)}
         />
         <Calendar
-          defaultData={defaultData}
-          selectMonth={selectMonth}
-          selectYear={selectYear}
-          monthData={monthData}
-          objState={objState}
+          year={year}
+          monthText={monthNames[month]}
+          weekDayNames={weekDayNames}
+          currentDate={currentDate}
+          selectedDate={selectedDate}
           handleDayClick={handleDayClick}
-        />{" "}
-        <Calendar
-          defaultData={defaultData}
-          selectMonth={selectMonth}
-          selectYear={selectYear}
-          monthData={monthData}
-          objState={objState}
-          handleDayClick={handleDayClick}
-        />{" "}
-        <Calendar
-          defaultData={defaultData}
-          selectMonth={selectMonth}
-          selectYear={selectYear}
-          monthData={monthData}
-          objState={objState}
-          handleDayClick={handleDayClick}
+          monthData={calendar.getMonthData(year, month)}
         />
-        <NextMonthButton />
+        <Calendar
+          year={yearText(year, month + 1)}
+          monthText={monthText(month + 1)}
+          weekDayNames={weekDayNames}
+          currentDate={currentDate}
+          selectedDate={selectedDate}
+          handleDayClick={handleDayClick}
+          monthData={calendar.getMonthData(year, month + 1)}
+        />
+        <button onClick={handleNextMonthButtonClick}>{">"}</button>
       </div>
       <DateDifference />
     </div>
