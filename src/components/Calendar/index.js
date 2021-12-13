@@ -69,6 +69,23 @@ export function getMonthData(year, month) {
       }
     }
   }
-
   return result;
 }
+
+export const monthText = (month, array) => {
+  if (month === 12) {
+    return array[0];
+  } else if (month === -1) {
+    return array[11];
+  }
+  return array[month];
+};
+
+export const yearText = (year, month) => {
+  if (month === 12) {
+    return year + 1;
+  } else if (month === -1) {
+    return year - 1;
+  }
+  return year;
+};

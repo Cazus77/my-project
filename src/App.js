@@ -2,7 +2,7 @@ import "./App.sass";
 import Calendar from "../src/components/Calendar/Calendar";
 import DateDifference from "./components/DateDifference/DateDifference";
 import React, { useState } from "react";
-import * as calendar from "./components/Calendar";
+import * as calendar from "./components/Calendar/index";
 
 const defaultData = {
   monthNames: [
@@ -29,14 +29,14 @@ const objState = {
 
 function App() {
   const [state, setState] = useState(objState);
+  const [inputFrom, setInputFrom] = useState();
+  const [inputUntil, setInputUntil] = useState();
 
   const { monthNames, weekDayNames } = defaultData;
   const { currentDate, selectedDate } = state;
 
   const year = state.date.getFullYear();
   const month = state.date.getMonth();
-  console.log(currentDate);
-  console.log(selectedDate);
 
   ////////////////////////////////////////////////////////////////////////////
   const handlePrevMonthButtonClick = () => {
@@ -49,26 +49,13 @@ function App() {
     setState({ date });
   };
 
-  const handleDayClick = (date) => {
+  const handleDayClick = (event, date) => {
     setState({ ...state, ...{ selectedDate: date } });
-  };
+    event.target.className !== "day selected"
+      ? (event.target.className = "day selected")
+      : (event.target.className = "day");
 
-  const monthText = (month) => {
-    if (month === 12) {
-      return monthNames[0];
-    } else if (month === -1) {
-      return monthNames[11];
-    }
-    return monthNames[month];
-  };
-
-  const yearText = (year, month) => {
-    if (month === 12) {
-      return year + 1;
-    } else if (month === -1) {
-      return year - 1;
-    }
-    return year;
+    !selectedDate ? setInputFrom(date) : setInputUntil(date);
   };
 
   //////////////////////////////////////////////////////////////////////////
@@ -79,8 +66,8 @@ function App() {
       <div className="block__calendar">
         <button onClick={handlePrevMonthButtonClick}>{"<"}</button>
         <Calendar
-          year={yearText(year, month - 1)}
-          monthText={monthText(month - 1)}
+          year={calendar.yearText(year, month - 1)}
+          monthText={calendar.monthText(month - 1, monthNames)}
           weekDayNames={weekDayNames}
           currentDate={currentDate}
           selectedDate={selectedDate}
@@ -97,8 +84,8 @@ function App() {
           monthData={calendar.getMonthData(year, month)}
         />
         <Calendar
-          year={yearText(year, month + 1)}
-          monthText={monthText(month + 1)}
+          year={calendar.yearText(year, month + 1)}
+          monthText={calendar.monthText(month + 1, monthNames)}
           weekDayNames={weekDayNames}
           currentDate={currentDate}
           selectedDate={selectedDate}
@@ -107,7 +94,11 @@ function App() {
         />
         <button onClick={handleNextMonthButtonClick}>{">"}</button>
       </div>
-      <DateDifference />
+      <DateDifference
+        inputFrom={inputFrom}
+        inputUntil={inputUntil}
+        currentDate={currentDate}
+      />
     </div>
   );
 }

@@ -35,9 +35,9 @@ function Calendar({
                     key={index}
                     className={classnames("day", {
                       today: calendar.areEqual(date, currentDate),
-                      selected: calendar.areEqual(date, selectedDate),
+                      //selected: calendar.areEqual(date, selectedDate),
                     })}
-                    onClick={() => handleDayClick(date)}
+                    onClick={(event) => handleDayClick(event, date)}
                   >
                     {date.getDate()}
                   </td>
