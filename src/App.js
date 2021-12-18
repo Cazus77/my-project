@@ -97,7 +97,11 @@ function App() {
       <DateDifference
         inputFrom={inputFrom}
         inputBefore={inputBefore}
-        currentDate={currentDate}
+        setInputBefore={setInputBefore}
+        state={state}
+        setState={setState}
+        selectedDate={selectedDate}
+        handleDayClick={handleDayClick}
       />
     </div>
   );

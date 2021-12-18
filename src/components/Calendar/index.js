@@ -21,7 +21,6 @@ const Month = {
 
 export function areEqual(a, b) {
   if (!a || !b) return false;
-
   return (
     a.getFullYear() === b.getFullYear() &&
     a.getMonth() === b.getMonth() &&
