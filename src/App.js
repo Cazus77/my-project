@@ -30,7 +30,7 @@ const objState = {
 function App() {
   const [state, setState] = useState(objState);
   const [inputFrom, setInputFrom] = useState();
-  const [inputUntil, setInputUntil] = useState();
+  const [inputBefore, setInputBefore] = useState();
 
   const { monthNames, weekDayNames } = defaultData;
   const { currentDate, selectedDate } = state;
@@ -55,7 +55,7 @@ function App() {
       ? (event.target.className = "day selected")
       : (event.target.className = "day");
 
-    !selectedDate ? setInputFrom(date) : setInputUntil(date);
+    !selectedDate ? setInputFrom(date) : setInputBefore(date);
   };
 
   //////////////////////////////////////////////////////////////////////////
@@ -96,7 +96,7 @@ function App() {
       </div>
       <DateDifference
         inputFrom={inputFrom}
-        inputUntil={inputUntil}
+        inputBefore={inputBefore}
         currentDate={currentDate}
       />
     </div>
