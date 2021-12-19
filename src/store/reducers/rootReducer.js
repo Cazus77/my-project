@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import { untilReducer } from "./untilReducer";
+import { beforeReducer } from "./beforeReducer";
 import { fromReducer } from "./fromReducer";
 
 export const rootReducer = combineReducers({
-  inputUntil: untilReducer,
+  inputUntil: beforeReducer,
   inputFrom: fromReducer,
 });
