@@ -1,0 +1,6 @@
+const constants = {
+  HANDLE_INPUT_CHANGE: "HANDLE_INPUT_CHANGE",
+  CLICK_DATE_FROM: "CLICK_DATE_FROM",
+  CLICK_DATE_BEFORE: "CLICK_DATE_BEFORE",
+};
+export default constants;
