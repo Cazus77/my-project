@@ -3,6 +3,7 @@ import Calendar from "../src/components/Calendar/Calendar";
 import DateDifference from "./components/DateDifference/DateDifference";
 import React, { useState } from "react";
 import * as calendar from "./components/Calendar/index";
+import { useDispatch, useSelector } from "react-redux";
 
 const defaultData = {
   monthNames: [
@@ -25,37 +26,51 @@ const objState = {
   date: new Date(),
   currentDate: new Date(),
   selectedDate: null,
+  flag: false,
 };
 
 function App() {
-  const [state, setState] = useState(objState);
-  const [inputFrom, setInputFrom] = useState();
-  const [inputBefore, setInputBefore] = useState();
+  const [data, setData] = useState(objState);
+  //const [inputFrom, setInputFrom] = useState();
+  //const [inputBefore, setInputBefore] = useState();
 
   const { monthNames, weekDayNames } = defaultData;
-  const { currentDate, selectedDate } = state;
+  const { currentDate, selectedDate } = data;
 
-  const year = state.date.getFullYear();
-  const month = state.date.getMonth();
+  const year = data.date.getFullYear();
+  const month = data.date.getMonth();
+
+  const dispatch = useDispatch();
+  const fromDate = useSelector((state) => state.selectedFromDate);
+  const beforeDate = useSelector((state) => state.selectedBeforeDate);
+
+  console.log(data);
+  console.log(fromDate);
+  console.log(beforeDate);
 
   ////////////////////////////////////////////////////////////////////////////
   const handlePrevMonthButtonClick = () => {
     const date = new Date(year, month - 1);
-    setState({ date });
+    setData({ date });
   };
 
   const handleNextMonthButtonClick = () => {
     const date = new Date(year, month + 1);
-    setState({ date });
+    setData({ date });
   };
 
   const handleDayClick = (event, date) => {
-    setState({ ...state, ...{ selectedDate: date } });
-    event.target.className !== "day selected"
-      ? (event.target.className = "day selected")
-      : (event.target.className = "day");
-
-    !selectedDate ? setInputFrom(date) : setInputBefore(date);
+    if (!fromDate) {
+      dispatch({ type: "SELECT_FROM_DATA", payload: date });
+      event.target.className !== "day selected"
+        ? (event.target.className = "day selected")
+        : (event.target.className = "day");
+    } else if (fromDate && !beforeDate) {
+      dispatch({ type: "SELECT_BEFORE_DATA", payload: date });
+      event.target.className !== "day selected"
+        ? (event.target.className = "day selected")
+        : (event.target.className = "day");
+    }
   };
 
   //////////////////////////////////////////////////////////////////////////
@@ -95,11 +110,11 @@ function App() {
         <button onClick={handleNextMonthButtonClick}>{">"}</button>
       </div>
       <DateDifference
-        inputFrom={inputFrom}
-        inputBefore={inputBefore}
-        setInputBefore={setInputBefore}
-        state={state}
-        setState={setState}
+        // inputFrom={inputFrom}
+        // inputBefore={inputBefore}
+        // setInputBefore={setInputBefore}
+        state={data}
+        setState={setData}
         selectedDate={selectedDate}
         handleDayClick={handleDayClick}
       />
