@@ -12,6 +12,8 @@ export default function DateDifference({
       ? (inputBefore - inputFrom) / (1000 * 60 * 60) / 24
       : "";
 
+  console.log(result);
+
   const [value, setValue] = useState();
 
   function handleChange(event) {
@@ -25,6 +27,7 @@ export default function DateDifference({
     setInputBefore(newDate);
   }
 
+  console.log(value);
   return (
     <input
       value={value}

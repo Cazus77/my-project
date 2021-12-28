@@ -26,13 +26,10 @@ const objState = {
   date: new Date(),
   currentDate: new Date(),
   selectedDate: null,
-  flag: false,
 };
 
 function App() {
   const [data, setData] = useState(objState);
-  //const [inputFrom, setInputFrom] = useState();
-  //const [inputBefore, setInputBefore] = useState();
 
   const { monthNames, weekDayNames } = defaultData;
   const { currentDate, selectedDate } = data;
@@ -43,10 +40,6 @@ function App() {
   const dispatch = useDispatch();
   const fromDate = useSelector((state) => state.selectedFromDate);
   const beforeDate = useSelector((state) => state.selectedBeforeDate);
-
-  console.log(data);
-  console.log(fromDate);
-  console.log(beforeDate);
 
   ////////////////////////////////////////////////////////////////////////////
   const handlePrevMonthButtonClick = () => {
@@ -84,8 +77,6 @@ function App() {
           year={calendar.yearText(year, month - 1)}
           monthText={calendar.monthText(month - 1, monthNames)}
           weekDayNames={weekDayNames}
-          currentDate={currentDate}
-          selectedDate={selectedDate}
           handleDayClick={handleDayClick}
           monthData={calendar.getMonthData(year, month - 1)}
         />
@@ -94,7 +85,6 @@ function App() {
           monthText={monthNames[month]}
           weekDayNames={weekDayNames}
           currentDate={currentDate}
-          selectedDate={selectedDate}
           handleDayClick={handleDayClick}
           monthData={calendar.getMonthData(year, month)}
         />
@@ -102,16 +92,14 @@ function App() {
           year={calendar.yearText(year, month + 1)}
           monthText={calendar.monthText(month + 1, monthNames)}
           weekDayNames={weekDayNames}
-          currentDate={currentDate}
-          selectedDate={selectedDate}
           handleDayClick={handleDayClick}
           monthData={calendar.getMonthData(year, month + 1)}
         />
         <button onClick={handleNextMonthButtonClick}>{">"}</button>
       </div>
       <DateDifference
-        // inputFrom={inputFrom}
-        // inputBefore={inputBefore}
+        inputFrom={fromDate}
+        inputBefore={beforeDate}
         // setInputBefore={setInputBefore}
         state={data}
         setState={setData}
