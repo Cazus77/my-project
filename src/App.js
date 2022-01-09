@@ -25,14 +25,13 @@ const defaultData = {
 const objState = {
   date: new Date(),
   currentDate: new Date(),
-  selectedDate: null,
 };
 
 function App() {
   const [data, setData] = useState(objState);
 
   const { monthNames, weekDayNames } = defaultData;
-  const { currentDate, selectedDate } = data;
+  const { currentDate } = data;
 
   const year = data.date.getFullYear();
   const month = data.date.getMonth();
@@ -53,16 +52,22 @@ function App() {
   };
 
   const handleDayClick = (event, date) => {
+    let classNameSelect = event.target.className;
+
     if (!fromDate) {
       dispatch({ type: "SELECT_FROM_DATA", payload: date });
-      event.target.className !== "day selected"
-        ? (event.target.className = "day selected")
-        : (event.target.className = "day");
+    } else if (
+      calendar.areEqual(date, fromDate) &&
+      classNameSelect === "day selected"
+    ) {
+      dispatch({ type: "DELETE_FROM_DATA", payload: null });
     } else if (fromDate && !beforeDate) {
       dispatch({ type: "SELECT_BEFORE_DATA", payload: date });
-      event.target.className !== "day selected"
-        ? (event.target.className = "day selected")
-        : (event.target.className = "day");
+    } else if (
+      calendar.areEqual(date, beforeDate) &&
+      classNameSelect === "day selected"
+    ) {
+      dispatch({ type: "DELETE_BEFORE_DATA", payload: null });
     }
   };
 
@@ -79,6 +84,8 @@ function App() {
           weekDayNames={weekDayNames}
           handleDayClick={handleDayClick}
           monthData={calendar.getMonthData(year, month - 1)}
+          fromDate={fromDate}
+          beforeDate={beforeDate}
         />
         <Calendar
           year={year}
@@ -87,6 +94,8 @@ function App() {
           currentDate={currentDate}
           handleDayClick={handleDayClick}
           monthData={calendar.getMonthData(year, month)}
+          fromDate={fromDate}
+          beforeDate={beforeDate}
         />
         <Calendar
           year={calendar.yearText(year, month + 1)}
@@ -94,17 +103,16 @@ function App() {
           weekDayNames={weekDayNames}
           handleDayClick={handleDayClick}
           monthData={calendar.getMonthData(year, month + 1)}
+          fromDate={fromDate}
+          beforeDate={beforeDate}
         />
         <button onClick={handleNextMonthButtonClick}>{">"}</button>
       </div>
       <DateDifference
-        inputFrom={fromDate}
-        inputBefore={beforeDate}
-        // setInputBefore={setInputBefore}
-        state={data}
-        setState={setData}
-        selectedDate={selectedDate}
+        fromDate={fromDate}
+        beforeDate={beforeDate}
         handleDayClick={handleDayClick}
+        dispatch={dispatch}
       />
     </div>
   );

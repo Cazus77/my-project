@@ -10,6 +10,12 @@ export const reducer = (state = initialState, action) => {
       return { ...state, selectedFromDate: action.payload };
     case "SELECT_BEFORE_DATA":
       return { ...state, selectedBeforeDate: action.payload };
+    case "DELETE_FROM_DATA":
+      return { ...state, selectedFromDate: action.payload };
+    case "DELETE_BEFORE_DATA":
+      return { ...state, selectedBeforeDate: action.payload };
+    case "INPUT_NUMBER_DAYS":
+      return { ...state, selectedBeforeDate: action.payload };
     default:
       return state;
   }

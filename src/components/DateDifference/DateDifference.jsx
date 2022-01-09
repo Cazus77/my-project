@@ -1,38 +1,27 @@
 import React, { useState } from "react";
 
-export default function DateDifference({
-  inputBefore,
-  inputFrom,
-  setInputBefore,
-  setState,
-  state,
-}) {
+export default function DateDifference({ beforeDate, fromDate, dispatch }) {
   const result =
-    inputBefore && inputFrom
-      ? (inputBefore - inputFrom) / (1000 * 60 * 60) / 24
+    beforeDate && fromDate
+      ? (beforeDate - fromDate) / (1000 * 60 * 60) / 24
       : "";
 
-  console.log(result);
-
-  const [value, setValue] = useState();
-
-  function handleChange(event) {
-    setValue(event.target.value);
-  }
+  const [value, setValue] = useState("");
 
   function handleInput(event) {
     let inputData = event.target.value * 24 * 60 * 60 * 1000;
-    let newDate = new Date(+inputFrom + inputData);
-    setState({ ...state, ...{ selectedDate: newDate } });
-    setInputBefore(newDate);
+    setValue(event.target.value);
+    let beforeDates = new Date(+fromDate + inputData);
+    console.log(beforeDates);
+    dispatch({ type: "INPUT_NUMBER_DAYS", payload: beforeDates });
   }
-
-  console.log(value);
   return (
-    <input
-      value={value}
-      onChange={handleChange}
-      onInput={(event) => handleInput(event)}
-    />
+    <>
+      {result ? (
+        <input value={result} />
+      ) : (
+        <input value={value} onChange={(event) => handleInput(event)} />
+      )}
+    </>
   );
 }
