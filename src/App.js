@@ -1,8 +1,8 @@
 import "./App.sass";
-import Calendar from "../src/components/Calendar/Calendar";
+import Calendar from "./components/Calendar/Calendar";
 import DateDifference from "./components/DateDifference/DateDifference";
 import React, { useState } from "react";
-import * as calendar from "./components/Calendar/index";
+import * as calendar from "./components/Calendar";
 import { useDispatch, useSelector } from "react-redux";
 
 const defaultData = {

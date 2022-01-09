@@ -4,7 +4,6 @@ import "./index.sass";
 import App from "./App";
 import { Provider } from "react-redux";
 import { store } from "./store";
-//import { reducer } from "./store/reducers/reducer";
 
 ReactDOM.render(
   <Provider store={store}>
