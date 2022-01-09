@@ -9,10 +9,9 @@ export default function DateDifference({ beforeDate, fromDate, dispatch }) {
   const [value, setValue] = useState("");
 
   function handleInput(event) {
-    let inputData = event.target.value * 24 * 60 * 60 * 1000;
     setValue(event.target.value);
+    let inputData = event.target.value * 24 * 60 * 60 * 1000;
     let beforeDates = new Date(+fromDate + inputData);
-    console.log(beforeDates);
     dispatch({ type: "INPUT_NUMBER_DAYS", payload: beforeDates });
   }
   return (

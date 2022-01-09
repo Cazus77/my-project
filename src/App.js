@@ -39,8 +39,10 @@ function App() {
   const dispatch = useDispatch();
   const fromDate = useSelector((state) => state.selectedFromDate);
   const beforeDate = useSelector((state) => state.selectedBeforeDate);
+  const inputValue = useSelector((state) => state.inputValue);
 
   ////////////////////////////////////////////////////////////////////////////
+
   const handlePrevMonthButtonClick = () => {
     const date = new Date(year, month - 1);
     setData({ date });
@@ -86,6 +88,7 @@ function App() {
           monthData={calendar.getMonthData(year, month - 1)}
           fromDate={fromDate}
           beforeDate={beforeDate}
+          inputValue={inputValue}
         />
         <Calendar
           year={year}
@@ -96,6 +99,7 @@ function App() {
           monthData={calendar.getMonthData(year, month)}
           fromDate={fromDate}
           beforeDate={beforeDate}
+          inputValue={inputValue}
         />
         <Calendar
           year={calendar.yearText(year, month + 1)}
@@ -105,6 +109,7 @@ function App() {
           monthData={calendar.getMonthData(year, month + 1)}
           fromDate={fromDate}
           beforeDate={beforeDate}
+          inputValue={inputValue}
         />
         <button onClick={handleNextMonthButtonClick}>{">"}</button>
       </div>
@@ -112,6 +117,7 @@ function App() {
         fromDate={fromDate}
         beforeDate={beforeDate}
         handleDayClick={handleDayClick}
+        inputValue={inputValue}
         dispatch={dispatch}
       />
     </div>

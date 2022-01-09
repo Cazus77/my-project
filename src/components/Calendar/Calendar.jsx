@@ -12,6 +12,7 @@ function Calendar({
   currentDate,
   fromDate,
   beforeDate,
+  inputValue,
 }) {
   return (
     <div className="calendar">
@@ -38,7 +39,8 @@ function Calendar({
                       today: calendar.areEqual(date, currentDate),
                       selected:
                         calendar.areEqual(date, fromDate) ||
-                        calendar.areEqual(date, beforeDate),
+                        calendar.areEqual(date, beforeDate) ||
+                        calendar.areEqual(date, inputValue),
                     })}
                     onClick={(event) => handleDayClick(event, date)}
                   >
