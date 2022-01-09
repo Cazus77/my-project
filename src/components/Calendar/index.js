@@ -21,7 +21,6 @@ const Month = {
 
 export function areEqual(a, b) {
   if (!a || !b) return false;
-
   return (
     a.getFullYear() === b.getFullYear() &&
     a.getMonth() === b.getMonth() &&
@@ -69,6 +68,23 @@ export function getMonthData(year, month) {
       }
     }
   }
-
   return result;
 }
+
+export const monthText = (month, array) => {
+  if (month === 12) {
+    return array[0];
+  } else if (month === -1) {
+    return array[11];
+  }
+  return array[month];
+};
+
+export const yearText = (year, month) => {
+  if (month === 12) {
+    return year + 1;
+  } else if (month === -1) {
+    return year - 1;
+  }
+  return year;
+};
