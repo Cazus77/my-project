@@ -37,9 +37,11 @@ function App() {
   const month = data.date.getMonth();
 
   const dispatch = useDispatch();
-  const fromDate = useSelector((state) => state.selectedFromDate);
-  const beforeDate = useSelector((state) => state.selectedBeforeDate);
-  const inputValue = useSelector((state) => state.inputValue);
+  const fromDate = useSelector((state) => state.fromReducer.selectedFromDate);
+  const beforeDate = useSelector(
+    (state) => state.beforeReducer.selectedBeforeDate
+  );
+  const inputValue = useSelector((state) => state.inputValueReducer.inputValue);
 
   ////////////////////////////////////////////////////////////////////////////
 

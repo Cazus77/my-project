@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import { beforeReducer } from "./beforeReducer";
 import { fromReducer } from "./fromReducer";
+import { beforeReducer } from "./beforeReducer";
+import { inputValueReducer } from "./inputValueReducer";
 
 export const rootReducer = combineReducers({
-  inputUntil: beforeReducer,
-  inputFrom: fromReducer,
+  fromReducer: fromReducer,
+  beforeReducer: beforeReducer,
+  inputValueReducer: inputValueReducer,
 });
